@@ -8,13 +8,18 @@ sys.setdefaultencoding('utf8')
 
 logger = logging.getLogger(__name__)
 
-class IfengHomepageSpider(scrapy.Spider):
-    name = "ifeng_homepage"
-    allowed_domains = ["ifeng.com"]
-    start_urls = ['http://www.ifeng.com/']
+class HomepageSpider(scrapy.Spider):
+    '''
+    通过当前实验,所有网站的首页都可以用如下逻辑解析出title和url,所以将homepage的抓取逻辑设计成了各门户网站抓取逻辑的积累
+    在各子类中重新定义 name allowed_domains start_urls 就可以直接抓取homepage
+
+    '''
+    name = None
+    allowed_domains = [u""]
+    start_urls = [u'']
 
     def parse(self, response):
-        logger.info(u'response status :' + unicode(response.status))
+        logger.info(self.name + u'response status :' + unicode(response.status))
         a_index = 1
         titles, hrefs = self._get_titles_hrefs(a_index, response)
         while len(titles) > 0:
