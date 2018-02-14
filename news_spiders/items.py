@@ -11,4 +11,7 @@ import scrapy
 class NewsSpidersItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    pass
+    web_site = scrapy.Field()
+    web_title = scrapy.Field()
+    web_url = scrapy.Field()
+    archive_time = scrapy.Field()

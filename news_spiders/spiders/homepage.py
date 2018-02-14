@@ -3,6 +3,8 @@ import os
 import sys
 import logging
 import scrapy
+from news_spiders.items import NewsSpidersItem
+import datetime
 reload(sys)
 sys.setdefaultencoding('utf8')
 
@@ -28,8 +30,12 @@ class HomepageSpider(scrapy.Spider):
                 a_index +=1
                 continue
             for i in xrange(0, len(titles)):
-                pass
-                # print titles[i].strip(), hrefs[i].strip()
+                nsi = NewsSpidersItem()
+                nsi[u'web_site'] = self.name
+                nsi[u'web_title'] = titles[i].strip()
+                nsi[u'web_url'] = hrefs[i].strip()
+                nsi[u'archive_time'] = datetime.datetime.now().strftime(u'%Y-%m-%d %H:%M:%S')
+                yield nsi
             a_index += 1
             titles, hrefs = self._get_titles_hrefs(a_index, response)
 
